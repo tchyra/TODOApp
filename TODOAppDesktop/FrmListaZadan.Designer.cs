@@ -155,6 +155,7 @@
             this.ClientSize = new System.Drawing.Size(448, 604);
             this.Controls.Add(this._lsvZadania);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "FrmListaZadan";
             this.Text = "Lista zadań";
             this.tableLayoutPanel1.ResumeLayout(false);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TODOAppDesktop.Model
 {
-    class Zadanie
+    public class Zadanie
     {
         public bool Wykonane { get; set; }
         public string Tresc { get; set; }

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,18 +14,21 @@ namespace TODOAppDesktop
 {
     public partial class FrmListaZadan : Form
     {
-        private readonly List<Zadanie> _listaZadan = new List<Zadanie>();
+        private readonly ListaZadan _listaZadan;
 
         public FrmListaZadan()
         {
             InitializeComponent();
         }
 
+        public FrmListaZadan(ListaZadan lista) : this()
+        {
+            _listaZadan = lista;
+            Text = lista.Nazwa;
+        }
+
         protected override void OnLoad(EventArgs e)
         {
-            _listaZadan.Clear();
-            _listaZadan.AddRange(MagazynDanych.OdczytajZadania());
-
             // inicjalizacja formatki
             OdswiezListboxZadan();
         }
@@ -37,7 +41,7 @@ namespace TODOAppDesktop
             if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.WprowadzonyTekst))
             {
                 var zadanie = new Zadanie(false, dialog.WprowadzonyTekst);
-                _listaZadan.Add(zadanie);
+                _listaZadan.Zadania.Add(zadanie);
                 ZapiszListeZadan();
                 OdswiezListboxZadan();
             }
@@ -63,7 +67,7 @@ namespace TODOAppDesktop
             var z = GetZaznaczoneZadanieOrNull();
             if (z == null) return;
 
-            _listaZadan.Remove(z);
+            _listaZadan.Zadania.Remove(z);
             ZapiszListeZadan();
             OdswiezListboxZadan();
         }
@@ -109,16 +113,16 @@ namespace TODOAppDesktop
                 = _btnZadanieWGore.Enabled
                 = z != null;
 
-            if(z != null)
+            if (z != null)
             {
                 _btnZadanieWGore.Enabled = _lsvZadania.SelectedIndices[0] > 0;
-                _btnZadanieWDol.Enabled = _lsvZadania.SelectedIndices[0] < _listaZadan.Count - 1;
+                _btnZadanieWDol.Enabled = _lsvZadania.SelectedIndices[0] < _listaZadan.Zadania.Count - 1;
             }
         }
 
         private void _lsvZadania_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
-            var zadanie = _listaZadan[e.Item.Index];
+            var zadanie = _listaZadan.Zadania[e.Item.Index];
             zadanie.Wykonane = e.Item.Checked;
             ZapiszListeZadan();
         }
@@ -130,7 +134,7 @@ namespace TODOAppDesktop
 
             _lsvZadania.Items.Clear();
 
-            foreach (var zadanie in _listaZadan)
+            foreach (var zadanie in _listaZadan.Zadania)
             {
                 var item = new ListViewItem(zadanie.Tresc)
                 {
@@ -146,25 +150,28 @@ namespace TODOAppDesktop
 
         private void ZapiszListeZadan()
         {
-            MagazynDanych.ZapiszZadania(_listaZadan);
+            //MagazynDanych.ZapiszZadania(_listaZadan.Zadania);
+            ListaZmieniona?.Invoke(this, EventArgs.Empty);
         }
 
         private Zadanie GetZaznaczoneZadanieOrNull()
         {
             if (_lsvZadania.SelectedItems.Count != 1) return null;
-            return _listaZadan[_lsvZadania.SelectedItems[0].Index];
+            return _listaZadan.Zadania[_lsvZadania.SelectedItems[0].Index];
         }
 
         private void PrzesunZadanie(Zadanie zadanie, int indexDo)
         {
             if (zadanie == null) return;
 
-            var indexZ = _listaZadan.IndexOf(zadanie);
+            var indexZ = _listaZadan.Zadania.IndexOf(zadanie);
 
-            if (indexDo < 0 || indexDo > _listaZadan.Count - 1) return;
+            if (indexDo < 0 || indexDo > _listaZadan.Zadania.Count - 1) return;
 
-            _listaZadan.Remove(zadanie);
-            _listaZadan.Insert(indexDo, zadanie);
+            _listaZadan.Zadania.Remove(zadanie);
+            _listaZadan.Zadania.Insert(indexDo, zadanie);
         }
+
+        public event EventHandler ListaZmieniona;
     }
 }

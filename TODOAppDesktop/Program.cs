@@ -16,7 +16,7 @@ namespace TODOAppDesktop
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmListaZadan());
+            Application.Run(new FrmListy());
         }
     }
 }

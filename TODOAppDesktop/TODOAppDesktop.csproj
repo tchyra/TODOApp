@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ikonka.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,7 +55,14 @@
     <Compile Include="FrmListaZadan.Designer.cs">
       <DependentUpon>FrmListaZadan.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmListy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmListy.Designer.cs">
+      <DependentUpon>FrmListy.cs</DependentUpon>
+    </Compile>
     <Compile Include="MagazynDanych.cs" />
+    <Compile Include="Model\ListaZadan.cs" />
     <Compile Include="Model\Zadanie.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,6 +74,9 @@
     </Compile>
     <EmbeddedResource Include="FrmListaZadan.resx">
       <DependentUpon>FrmListaZadan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmListy.resx">
+      <DependentUpon>FrmListy.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -89,6 +102,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\ikonka.ico" />
+    <Content Include="ikonka.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

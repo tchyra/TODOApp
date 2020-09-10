@@ -40,6 +40,38 @@ namespace TODOAppDesktop
             return listaZadan;
         }
 
+        public static void ZapiszListyZadan(List<ListaZadan> listy)
+        {
+            var tekst = "";
+
+            foreach (var lista in listy)
+            {
+                tekst += lista.Serializuj();
+            }
+
+            File.WriteAllText(GetSciezkaDoPliku(), tekst);
+        }
+
+        public static List<ListaZadan> OdczytajListyZadan()
+        {
+            var listy = new List<ListaZadan>();
+            var tekst = "";
+            foreach (var linijka in File.ReadLines(GetSciezkaDoPliku()))
+            {
+                if (linijka.StartsWith("###") && tekst != "")
+                {
+                    listy.Add(ListaZadan.Deserializuj(tekst));
+                    tekst = "";
+                }
+
+                tekst += linijka + '\n';
+            }
+
+            listy.Add(ListaZadan.Deserializuj(tekst));
+
+            return listy;
+        }
+
         private static string GetSciezkaDoPliku()
         {
             var sciezka = Path.Combine(Application.CommonAppDataPath, "zadania.txt");
