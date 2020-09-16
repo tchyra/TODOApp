@@ -46,6 +46,7 @@
             this._lbxListy.Name = "_lbxListy";
             this._lbxListy.Size = new System.Drawing.Size(338, 397);
             this._lbxListy.TabIndex = 0;
+            this._lbxListy.SelectedIndexChanged += new System.EventHandler(this._lbxListy_SelectedIndexChanged);
             this._lbxListy.DoubleClick += new System.EventHandler(this._lbxListy_DoubleClick);
             // 
             // _btnUtworzListe
@@ -60,6 +61,7 @@
             // 
             // _btnZmienNazwe
             // 
+            this._btnZmienNazwe.Enabled = false;
             this._btnZmienNazwe.Location = new System.Drawing.Point(93, 12);
             this._btnZmienNazwe.Name = "_btnZmienNazwe";
             this._btnZmienNazwe.Size = new System.Drawing.Size(127, 23);
@@ -70,6 +72,7 @@
             // 
             // _btnUsun
             // 
+            this._btnUsun.Enabled = false;
             this._btnUsun.Location = new System.Drawing.Point(226, 12);
             this._btnUsun.Name = "_btnUsun";
             this._btnUsun.Size = new System.Drawing.Size(69, 23);

@@ -67,7 +67,8 @@ namespace TODOAppDesktop
                 tekst += linijka + '\n';
             }
 
-            listy.Add(ListaZadan.Deserializuj(tekst));
+            if (tekst != "")
+                listy.Add(ListaZadan.Deserializuj(tekst));
 
             return listy;
         }

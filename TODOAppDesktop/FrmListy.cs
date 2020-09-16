@@ -44,12 +44,27 @@ namespace TODOAppDesktop
 
         private void _btnZmienNazwe_Click(object sender, EventArgs e)
         {
+            var lista = _lbxListy.SelectedItem as ListaZadan;
+            if (lista == null) return;
 
+            var dialog = new TextInputDialog("Edytuj nazwę listy zadań", lista.Nazwa);
+            var result = dialog.ShowDialog();
+            if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.WprowadzonyTekst))
+            {
+                lista.Nazwa = dialog.WprowadzonyTekst;
+                ZapiszListy();
+                OdswiezListbox();
+            }
         }
 
         private void _btnUsun_Click(object sender, EventArgs e)
         {
+            var lista = _lbxListy.SelectedItem as ListaZadan;
+            if (lista == null) return;
 
+            _listy.Remove(lista);
+            ZapiszListy();
+            OdswiezListbox();
         }
 
         private void _lbxListy_DoubleClick(object sender, EventArgs e)
@@ -67,10 +82,12 @@ namespace TODOAppDesktop
             ZapiszListy();
         }
 
+
         private void OdswiezListbox()
         {
             _lbxListy.Items.Clear();
-            foreach (var lista in _listy)
+            
+            foreach (var lista in _listy.OrderBy(l => l.Nazwa))
             {
                 _lbxListy.Items.Add(lista);
             }
@@ -79,6 +96,13 @@ namespace TODOAppDesktop
         private void ZapiszListy()
         {
             MagazynDanych.ZapiszListyZadan(_listy);
+        }
+
+        private void _lbxListy_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _btnUsun.Enabled =
+            _btnZmienNazwe.Enabled =
+                _lbxListy.SelectedItem is ListaZadan;
         }
     }
 }

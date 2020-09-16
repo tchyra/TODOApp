@@ -164,8 +164,6 @@ namespace TODOAppDesktop
         {
             if (zadanie == null) return;
 
-            var indexZ = _listaZadan.Zadania.IndexOf(zadanie);
-
             if (indexDo < 0 || indexDo > _listaZadan.Zadania.Count - 1) return;
 
             _listaZadan.Zadania.Remove(zadanie);
